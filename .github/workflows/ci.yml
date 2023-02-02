@@ -1,0 +1,36 @@
+name: CI
+
+# on: pull_request
+on: push
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python_version: python:3.8-alpine
+          - python_version: python:3.9-alpine
+          - python_version: python:3.10-alpine
+          - python_version: python:3.11-alpine
+    runs-on: ubuntu-latest
+    container: ${{ matrix.python_version }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apk add --update build-base libffi-dev
+          pip install --upgrade pip # get latest wheels available
+          pip install poetry
+          poetry install
+
+      - name: Run linters, black and ruff
+        run: |
+          poetry run black --check .
+          poetry run ruff --format github .
+
+      - name: Run tests
+        run: |
+          poetry run pytest

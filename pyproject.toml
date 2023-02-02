@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "resuelve-auth"
+version = "0.1.0"
+description = "Resuelve auth implementation in python"
+authors = ["Erick Navarro <ericknavarro@resuelve.mx>"]
+readme = "README.rst"
+packages = [{include = "resuelve_auth"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+pytest = "^7.2.1"
+ruff = "^0.0.240"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
