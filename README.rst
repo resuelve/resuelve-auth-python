@@ -23,7 +23,9 @@ Using ``poetry``
 Usage
 -----
 
-Check an existing token, ``ttl`` can be used to define the quantity of seconds that token will be valid.
+Validate a existing token.
+
+``ttl`` can be used to define the quantity of seconds that token will be valid.
 
 .. code-block:: python
 
