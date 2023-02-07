@@ -72,7 +72,11 @@ def _encode(secret: bytes, data: dict) -> (str, str):
     """
     # we need to define custom separators because by default json.dumps
     # put a space after them that causes to generate a different signature
-    message = base64.b64encode(json.dumps(data, separators=(",", ":")).encode())
+    # we need ensure_Sir=False because data could contain special characters
+    # and that could invalidate the signature
+    message = base64.b64encode(
+        json.dumps(data, separators=(",", ":"), ensure_ascii=False).encode()
+    )
 
     hash_ = hmac.HMAC(key=secret, msg=message, digestmod=hashlib.sha256)
     signature = hash_.hexdigest().upper()

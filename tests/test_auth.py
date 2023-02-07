@@ -40,3 +40,13 @@ def test_raise_error_for_invalid_signature():
 def test_raise_error_when_token_is_malformed():
     with pytest.raises(MalformedToken):
         validate_token("secret", "something that doesn't match a valid token format")
+
+
+def test_validate_and_decode_token_with_special_chars_in_metadata():
+    meta = {"name": "Díaz"}
+    secret = "this is a secret phrase"
+    token = build_token(secret, meta=meta)
+
+    metadata = validate_token(secret, token)
+
+    assert metadata == {"name": "Díaz"}
